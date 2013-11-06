@@ -21,5 +21,5 @@ def index():
 ```
 
 ```example.html
-{% if request.MOBILE %}<strong>I'm mobile</strong>{% endif %}
+{% if request.DEVICE == 'mobile' %}<strong>I'm mobile</strong>{% endif %}
 ```
