@@ -51,3 +51,14 @@ def pc_test():
         eq_(flask.request.user_agent.string, 'Chrome')
         eq_(flask.request.DEVICE, 'pc')
         eq_(app.jinja_loader.searchpath[0], 'templates/pc')
+
+
+def order_test():
+    devices.add_pattern('pc', '.*', 'templates/pc')
+    devices.add_pattern('mobile', 'iphone', 'templates/mobile')
+    app.wsgi_app = ClientProxy(app.wsgi_app, 'iphone')
+    with app.test_client() as c:
+        c.get('/')
+        eq_(flask.request.user_agent.string, 'iphone')
+        eq_(flask.request.DEVICE, 'pc')
+        eq_(app.jinja_loader.searchpath[0], 'templates/pc')
