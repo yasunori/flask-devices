@@ -22,7 +22,7 @@ class Devices(object):
                 self.process_request(ctx.request)
 
     def process_request(self, request):
-        user_agent = request.user_agent.string
+        user_agent = request.user_agent.string.lower()
         for key, val in self.patterns.items():
             if val[0].search(user_agent):
                 self.app.jinja_loader = FileSystemLoader(val[1])
@@ -35,4 +35,3 @@ class Devices(object):
     def add_pattern(self, name, pattern, template_folder):
         pattern_complied = re.compile(pattern)
         self.patterns[name] = (pattern_complied, template_folder)
-
