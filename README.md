@@ -1,4 +1,4 @@
-flask-devices
+Flask-Devices
 =============
 
 Switch Flask's template folder automatically by request's user-agent(iPhone, iPad, Android, PC, and so on)
@@ -16,7 +16,7 @@ devices.add_pattern('pc', '.*', 'webapp/templates/pc')
 @app.route("/", methods=['GET', 'POST'])
 def index():
     print(request.DEVICE) # mobile, pc,
-    if(request.DEVICE == 'pc'):
+    if request.DEVICE == 'pc':
         # pc
 ```
 
