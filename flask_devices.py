@@ -22,15 +22,14 @@ class Devices(object):
 
     def process_request(self, request):
         user_agent = request.user_agent.string.lower()
-        for key, pattern, folder in self.patterns:
-            if pattern.search(user_agent):
-                self.app.jinja_loader = FileSystemLoader(folder)
-                request.DEVICE = key
-                break
+        match = [(key, pattern, folder) for key, pattern, folder in self.patterns if pattern.search(user_agent) is not None]
+        if match:
+            self.app.jinja_loader = FileSystemLoader(match[0][2])
+            request.DEVICE = match[0][0]
 
     def set_patterns(self, patterns=None):
         self.patterns = patterns
 
-    def add_pattern(self, name, pattern, template_folder):
+    def add_pattern(self, group_name, pattern, template_folder):
         pattern_complied = re.compile(pattern.lower())
-        self.patterns.append((name, pattern_complied, template_folder))
+        self.patterns.append((group_name, pattern_complied, template_folder))
