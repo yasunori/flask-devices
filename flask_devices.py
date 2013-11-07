@@ -3,7 +3,6 @@
 import re
 from flask import _request_ctx_stack as stack
 from jinja2 import FileSystemLoader
-from collections import OrderedDict
 
 
 class Devices(object):
@@ -13,7 +12,7 @@ class Devices(object):
             self.init_app(app)
 
     def init_app(self, app):
-        self.patterns = app.config.get('DEVICES', OrderedDict())
+        self.patterns = app.config.get('DEVICES', [])
 
         @app.before_request
         def _template_changer():
@@ -23,9 +22,9 @@ class Devices(object):
 
     def process_request(self, request):
         user_agent = request.user_agent.string.lower()
-        for key, val in self.patterns.items():
-            if val[0].search(user_agent):
-                self.app.jinja_loader = FileSystemLoader(val[1])
+        for key, pattern, folder in self.patterns:
+            if pattern.search(user_agent):
+                self.app.jinja_loader = FileSystemLoader(folder)
                 request.DEVICE = key
                 break
 
@@ -33,5 +32,5 @@ class Devices(object):
         self.patterns = patterns
 
     def add_pattern(self, name, pattern, template_folder):
-        pattern_complied = re.compile(pattern)
-        self.patterns[name] = (pattern_complied, template_folder)
+        pattern_complied = re.compile(pattern.lower())
+        self.patterns.append((name, pattern_complied, template_folder))
