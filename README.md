@@ -3,6 +3,8 @@ Flask-Devices
 
 Switch Flask's template folder automatically by request's user-agent(iPhone, iPad, Android, PC, and so on)
 
+[![Build Status](https://travis-ci.org/yasunori/flask-devices.png?branch=master)](https://travis-ci.org/yasunori/flask-devices)
+
 ## Usage
 ```
 devices = Devices(app)
