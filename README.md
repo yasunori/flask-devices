@@ -5,6 +5,12 @@ Switch Flask's template folder automatically by request's User Agent(iPhone, iPa
 
 [![Build Status](https://travis-ci.org/yasunori/flask-devices.png?branch=master)](https://travis-ci.org/yasunori/flask-devices)
 
+
+## Install
+```
+pip install Flask-Devices
+```
+
 ## Usage
 ```
 devices = Devices(app)
