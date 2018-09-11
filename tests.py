@@ -16,7 +16,8 @@ class ClientProxy(object):
 
     def __call__(self, environ, start_response):
         environ['REMOTE_ADDR'] = environ.get('REMOTE_ADDR', '127.0.0.1')
-        environ['HTTP_USER_AGENT'] = environ.get('HTTP_USER_AGENT', self.user_agent)
+        #environ['HTTP_USER_AGENT'] = environ.get('HTTP_USER_AGENT', self.user_agent)
+        environ['HTTP_USER_AGENT'] = self.user_agent
         return self.app(environ, start_response)
 
 
